@@ -69,7 +69,7 @@ public class MySQLite extends SQLiteOpenHelper {
         Cursor cursor = db.query("animalsDB",
                         new String[] { "_id",
                              "gatunek", "kolor", "wielkosc", "opis" }, // b.column names
-                        " id = ?", // c. selections
+                        " _id = ?", // c. selections
                         new String[] {String.valueOf(id) }, // d. selections args
                         null, // e. group by
                         null, // f. having

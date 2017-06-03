@@ -10,10 +10,27 @@ import android.widget.Spinner;
 
 public class DodajWpis extends AppCompatActivity {
 
+    private int modify_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodaj_wpis);
+        Bundle extras = getIntent().getExtras();
+        try {
+            if(extras.getSerializable("element") != null) {
+                Animal zwierz = (Animal) extras.getSerializable("element");
+                EditText kolor = (EditText) findViewById(R.id.editText_kolor);
+                EditText wielkosc = (EditText) findViewById(R.id.editText_wielkosc);
+                EditText opis = (EditText) findViewById(R.id.editText_opis);
+                kolor.setText(zwierz.getKolor());
+                wielkosc.setText(Float.toString(zwierz.getWielkosc()));
+                opis.setText(zwierz.getOpis());
+                this.modify_id=zwierz.getId();
+            }
+        }catch(Exception ex) {
+            this.modify_id=0;
+        }
         ArrayAdapter gatunki = new ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -34,6 +51,7 @@ public class DodajWpis extends AppCompatActivity {
                 Float.valueOf(wielkosc.getText().toString()),
                 opis.getText().toString()
         );
+        zwierze.setId(this.modify_id);
         Intent intencja = new Intent();
         intencja.putExtra("nowy", zwierze);
         setResult(RESULT_OK, intencja);
